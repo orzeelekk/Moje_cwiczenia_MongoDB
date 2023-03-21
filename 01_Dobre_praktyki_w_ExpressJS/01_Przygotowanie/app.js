@@ -1,4 +1,7 @@
 var createError = require('http-errors');
+//po zmianie require na import konsola swiruje
+// import createError from 'http-errors'
+// var createError = import('http-errors'); tu ok ale juz np express znowu wyrzuca blad
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
