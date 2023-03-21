@@ -33,15 +33,30 @@ app.get('/test/:tekst',(req,res) => {
     const reverse = req.params.tekst.split('').reverse().join('')
     res.send(reverse.repeat(1000))
 })
-
 app.use(compression({level:9}))
 
 app.use(
     morgan(function (tokens, req, res) {
-        return [tokens.method(req, res), tokens.url(req,res),'rapapara'].join(' ');
+        return [
+            tokens.method(req, res),
+            tokens.url(req,res),
+            tokens.status(req,res),
+            tokens.res(req,res,'content-length'), '-',
+            tokens['response-time'](req,res),'ms'
+        ].join(' ');
     })
 )
-
+app.get('/counter/:text',(req,res) => {
+    const stats = req.params.text
+        // same literki zestawi
+        .split('')
+        //dodaje licznik accumulatora
+        .reduce((accumulator,currentValue) => {
+            accumulator[currentValue] ? (accumulator[currentValue] += 1) : (accumulator[currentValue] = 1);
+            return accumulator;
+        },{});
+    res.send(stats)
+})
 
 app.get('/',(req,res) => {
     res.send('Cos tam')
