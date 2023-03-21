@@ -29,6 +29,11 @@ const limiter = rateLimit({
 })
 app.use(limiter)
 
+app.get('/test/:tekst',(req,res) => {
+    const reverse = req.params.tekst.split('').reverse().join('')
+    res.send(reverse.repeat(1000))
+})
+
 app.use(compression({level:9}))
 
 app.use(
@@ -36,15 +41,11 @@ app.use(
         return [tokens.method(req, res), tokens.url(req,res),'rapapara'].join(' ');
     })
 )
+
+
 app.get('/',(req,res) => {
     res.send('Cos tam')
 })
-app.get('/test/:tekst',(req,res) => {
-    const reverse = req.params.tekst.split('').reverse().join('')
-    res.send(reverse.repeat(1000))
-})
-
-
 app.listen(5000,() => {
     console.log("Listening on 5000")
 })
