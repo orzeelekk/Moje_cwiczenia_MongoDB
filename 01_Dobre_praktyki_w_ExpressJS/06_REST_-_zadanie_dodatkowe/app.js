@@ -21,14 +21,16 @@ app.put('/user/:name',(req,res) => {
     user.modified = new Date()
     res.send('Nowe name i date')
 })
-
-
+// po czystym route dziala
 const limiter = rateLimit({
+    //limit czasu na 2 minuty
     windowMs:120000,
     max: 4,
 })
-app.use(compression({level:9}))
 app.use(limiter)
+
+app.use(compression({level:9}))
+
 app.use(
     morgan(function (tokens, req, res) {
         return [tokens.method(req, res), tokens.url(req,res),'rapapara'].join(' ');
