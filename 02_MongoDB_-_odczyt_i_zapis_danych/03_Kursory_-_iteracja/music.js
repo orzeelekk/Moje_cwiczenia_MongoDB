@@ -23,6 +23,18 @@ const collectionName = 'music';
 
     // HERE - insert iteration using "forEach" method
     let toListenTimeForEach = 0;
+    let toListen = collection.find({listened:false},{timeout:false})
+    //forEach:
+    // await toListen.forEach(song => {
+    //   toListenTimeForEach += song.length
+    // })
+    //next()
+    while (await toListen.hasNext()) {
+      const nextSong = await toListen.next();
+      toListenTimeForEach += nextSong.length
+    }
+
+    console.log(toListenTimeForEach)
 
     // Assertions below - do not change them
     console.assert(toListenTimeForEach === 4897, 'Should sum up to 4897 seconds', toListenTimeForEach);
