@@ -10,6 +10,7 @@
   "type": "module",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "mongodb": "^3.5.5"
   }
 }

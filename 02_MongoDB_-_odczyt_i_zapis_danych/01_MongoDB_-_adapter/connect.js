@@ -1,7 +1,8 @@
 // Add MongoClient import here
-
+import MongoClient from "mongodb"
 // Add your database URL here
-let mongoURL = '';
+let mongoURL = 'mongodb://localhost:27017';
+//u mnie localhost dziala
 
 // This variable will be used in the assertion. Assign proper DB connection value to it
 let connected = false;
@@ -14,7 +15,8 @@ const collectionName = 'connectionTest';
   let connection;
 
   // Implement connecting to the database here
-
+  connection = await MongoClient.connect(mongoURL)
+  connected = connection.isConnected()
 
   console.assert(connected === true, 'Should be connected', connected);
 
@@ -29,7 +31,7 @@ const collectionName = 'connectionTest';
     await db.createCollection(collectionName);
     const collection = db.collection(collectionName);
     await collection.insertOne({
-      name: 'Test Connection',
+      name: 'Test Connection z localhost:',
       status: true,
       numValue: 129,
       dateConnected: new Date(),
@@ -37,7 +39,6 @@ const collectionName = 'connectionTest';
       codeExample: new MongoClient.Code('function() {console.log(\'Hello World!\');}'),
       binData: new MongoClient.Binary(Buffer.alloc(16, 'aa456423425234fbc34124b'), 0),
     });
-
     await connection.close();
   }
 })();
