@@ -21,7 +21,15 @@ const collectionName = 'albums';
     const collection = db.collection(collectionName);
 
     // HERE - modify this "find" code!
-    let albums;
+    let albums = await collection.find({
+      artist:{
+        $in:['Pink Floyd','The Beatles']
+      },
+      listened:{
+        $ne:true
+      }
+    }).toArray()
+    console.log(albums)
 
     // Assertions here
     console.assert(albums && albums.length === 3, 'Should have find 3 albums', albums);
