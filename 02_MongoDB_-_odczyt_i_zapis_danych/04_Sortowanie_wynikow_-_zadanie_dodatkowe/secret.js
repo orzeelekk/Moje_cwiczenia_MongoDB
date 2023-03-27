@@ -23,6 +23,11 @@ const collectionName = 'secret';
 
     // HERE - add your query + sorting
     let secretPhrase = '';
+    let secretElements = collection.find({isSecret:true}).sort({createdAt:1})
+    await secretElements.forEach((Element) => {
+      secretPhrase += Element.letter
+      console.log(`Moj element - ${Element.letter}`)
+    })
 
     console.log(`Your secret phrase is: ${secretPhrase}`);
 
