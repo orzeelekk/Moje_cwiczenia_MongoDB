@@ -21,10 +21,24 @@ const collectionName = 'forumUsers';
     const collection = db.collection(collectionName);
 
     // HERE - modify this "find" code!
-    const forumUsersToUpgrade = collection.find({});
+    const forumUsersToUpgrade = collection.find({
+    badges: {
+      $elemMatch: {
+        name: {
+          $in: ['discussion-master','late-responder','frequent'],
+        },
+        createdAt: {
+          $gte: new Date('2019-08-01T00:00:00')
+        }
+      }
+    },
+      //nie moze byc po $elemMatch
+      'badges.name': { $ne: 'premium' }
+    });
 
     // Assertions below
     const usersArr = await forumUsersToUpgrade.toArray();
+    console.log(usersArr)
     console.assert(usersArr && usersArr.length === 2,
       'Should find two forum users to upgrade', usersArr && usersArr.length);
     console.assert(usersArr && usersArr[0] && usersArr[0].nick === 'bgaler9',
