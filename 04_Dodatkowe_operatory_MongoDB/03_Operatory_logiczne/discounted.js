@@ -21,7 +21,14 @@ const collectionName = 'discounted';
     const collection = db.collection(collectionName);
 
     // HERE - modify this code!
-    let discounted;
+    let discounted = await collection.find({
+      $or: [{
+        price: {$lte: 5}
+      },{
+        price: {$gt: 18}
+      }]
+    }).toArray()
+    console.log(discounted)
 
     // Assertions below
     console.assert(discounted && discounted.length === 7,
