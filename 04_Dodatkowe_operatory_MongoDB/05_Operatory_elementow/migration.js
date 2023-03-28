@@ -21,7 +21,16 @@ const collectionName = 'cars';
     const collection = db.collection(collectionName);
 
     // HERE - modify this "find" code!
-    const cars = collection.find({});
+    let cars = collection.find({
+      $or: [{
+        migrated: {$exists:false}
+      }, {
+        year: {$not:{$type:'number'}}
+      }]
+    })
+
+    console.log(await cars.toArray())
+    //wszystko co nie jest migrated i ma rok produkcji po stringu""
 
     // Assertions below - do not modify them!
     const carsArr = await cars.toArray();
