@@ -25,12 +25,27 @@ const collectionName = 'telNumbers';
     let finalNumbersString = '';
 
     // HERE - you can add helper callback for both pages
-
+    const telEntryGatherer = (telEntry) => {
+      return `${telEntry.name},${telEntry.telNumber}`;
+    };
     // HERE - add your first page
+    let page = collection.find({}).sort({ name: 1 }).limit(5).skip(0);
+    let pageElements = [];
+    await page.forEach(telEntry => {
+      pageElements.push(telEntryGatherer(telEntry));
+    });
+    pageData.push(pageElements.join(';'));
 
     // HERE - add your second page
-
+    page = collection.find({}).sort({ name: 1 }).limit(5).skip(5);
+    pageElements = [];
+    await page.forEach(telEntry => {
+      pageElements.push(telEntryGatherer(telEntry));
+    });
+    pageData.push(pageElements.join(';'));
     // HERE - glue all the data here!
+    pageData = pageData.map((data, index) => `${index + 1}: ${data}`);
+    finalNumbersString = pageData.join('\n');
 
     // Assertion below - do not modify!
     console.assert(finalNumbersString ===
