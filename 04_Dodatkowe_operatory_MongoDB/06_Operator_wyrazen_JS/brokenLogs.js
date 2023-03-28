@@ -9,6 +9,15 @@ const dbName = 'exercises';
 // Collection Name
 const collectionName = 'brokenLogs';
 
+// const checkForInvalidChars = function() {
+//   const text = this.additionalId;
+//   if (!text) return false;
+//   for (let i=0;i<text.length;i++) {
+//     if (text.charCodeAt(index) > 127) return true
+//   }
+//   return false;
+// }
+
 (async function () {
   try {
     // Connect using MongoClient
@@ -21,7 +30,19 @@ const collectionName = 'brokenLogs';
     const collection = db.collection(collectionName);
 
     // HERE - modify this "find" code!
-    const logs = collection.find({});
+    const logs = collection.find({
+      $where: `function () {
+    const additionalId = this.additionalId;
+    if (!additionalId) {
+      return false;
+    }
+    for (let i = 0; i < additionalId.length; i++) {
+      if (additionalId.charCodeAt(i) > 127) {
+        return true;
+      }
+    } return false;
+  }`
+    });
 
     // Assertions below - do not modify them!
     const logsArr = await logs.toArray();
