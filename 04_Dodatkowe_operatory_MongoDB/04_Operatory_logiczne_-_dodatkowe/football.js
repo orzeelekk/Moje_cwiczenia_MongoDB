@@ -21,10 +21,30 @@ const collectionName = 'footballers';
     const collection = db.collection(collectionName);
 
     // HERE - modify this "find" code!
-    const footballers = collection.find({});
-
-    // HERE - add your average calculating code here:
+    const footballers = collection.find({
+      $nor: [
+        { inactive: true },
+        { games: { $gte: 4 }},
+        { redCards: { $lt: 2 }}
+      ]
+    });
     let avg = 0;
+
+    await footballers.forEach(footballer => {
+      avg += footballer.goals;
+      console.log(footballer.name)
+      console.log(avg)
+    })
+    avg = avg / await footballers.count()
+    //suma goli przez sume pilkarzy
+    console.log(avg)
+
+    // const goals = await footballers.reduce((acc,curr) => acc + curr.goals, 0);
+    // let avg = goals / footballers.length
+    // console.log(footballers)
+    // console.log(avg)
+    // HERE - add your average calculating code here:
+
 
     // Assertions below
     const footballersArr = await footballers.toArray();
