@@ -22,9 +22,39 @@ const collectionName = 'movies';
     const collection = db.collection(collectionName);
 
     // HERE - add your update code
+    // await collection.updateMany({
+    //   series:'Mad Max' && 'Mission: Impossible',
+    // },{
+    //   $set: {
+    //     seen: true
+    //   }
+    // })
+    // await collection.updateMany({
+    //   series:'Mad Max'
+    // },{
+    //   $set: {
+    //     seen: true
+    //   }
+    // })
+    // await collection.updateMany({
+    //   series:'Mission: Impossible'
+    // },{
+    //   $set: {
+    //     seen: true
+    //   }
+    // })
+    await collection.updateMany({
+      series: ['Mad Max','Mission: Impossible']
+    }, {
+      $set: {
+        seen: true
+      }
+    })
+
 
     // Assertions below - do not modify them!
     const madMaxMovies = await collection.find({series: 'Mad Max'}).toArray();
+    console.log(madMaxMovies)
     madMaxMovies.forEach(movie => {
       console.assert(movie.seen === true, 'Movie should be seen: ', movie.title);
     });
