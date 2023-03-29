@@ -44,9 +44,28 @@ const collectionName = 'logs';
       '5e6bb094fc13ae75dc000009,apps,2019-06-26T02:24:49Z,DEBUG,App 678698745 initialized properly';
 
     // HERE - parse the string and insert to the DB below!
+    //1-rozbicie
+    const logMessages = logString.split(";")
+    console.log(logMessages)
+    //przecinkuje mi calego logstring"aaaaa","bbbbb" itp.
+    const logObjects = logMessages.map(message => {
+      // lecimy po aaa na a + opis
+      const splitMessage = message.split(",")
+      return {
+        _id: splitMessage[0],
+        domain: splitMessage[1],
+        date: splitMessage[2],
+        severity: splitMessage[3],
+        message: splitMessage[4]
+      }
+    })
+    console.log(logObjects)
+    await collection.insertMany(logObjects)
+    //przekształca mi collectiona i nadaje do messages
 
     // Assertions below - do not modify them!
-    const messages = collection.find({});
+    const messages = collection.find({})
+
     console.assert(await messages.count() === 10, 'Should have 10 logs', messages.length);
 
     const appMessageWarn = (await collection.findOne({ severity: 'WARN', domain: 'apps'}) || {});
