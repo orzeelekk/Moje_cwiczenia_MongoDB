@@ -21,11 +21,20 @@ const collectionName = 'orders';
     const collection = db.collection(collectionName);
 
     const allOrders = await collection.find({}).toArray();
+    console.log(allOrders)
     console.assert(allOrders && allOrders.length === 4, 'Should have 4 orders', allOrders);
 
     // REMOVE PROPER ENTRIES HERE
+    // const dateFilter = currentDate.setFullYear(currentDate.getFullYear() - 2);
+    // console.log(currentDate)
+    const currentDate = new Date();
+    await collection.deleteMany({
+      orderDate: { $lte: currentDate.setFullYear(currentDate.getFullYear() - 2) }
+    });
 
     const ordersAfterCleaningUp = await collection.find({}).toArray();
+    console.log(ordersAfterCleaningUp)
+
     console.assert(ordersAfterCleaningUp && ordersAfterCleaningUp.length === 2, 'Should have 2 orders after cleaning up', allOrders);
     const orderNames = (ordersAfterCleaningUp && ordersAfterCleaningUp.map(order => order.name)) || [];
     console.assert(orderNames.includes('Stream microphone') && orderNames.includes('Android phone'),
