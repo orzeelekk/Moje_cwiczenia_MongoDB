@@ -22,9 +22,18 @@ const collectionName = 'numbers';
     const collection = db.collection(collectionName);
 
     // HERE - add your update code
+   await collection.updateOne({
+      firstName:"Jan",
+      lastName:"Kowalski"
+    }, {
+      $set: {
+        phoneNo: '48616161616',
+      }
+    })
 
     // Assertions below - do not modify them!
     const changedContact = await collection.findOne({phoneNo: '48616161616'});
+   console.log(changedContact)
     console.assert(changedContact !== null, 'Contact should be found by new phone number!', changedContact);
 
     const unchangedContact = await collection.findOne({phoneNo: '48754456654'});
