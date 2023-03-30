@@ -23,6 +23,22 @@ const collectionName = 'travels';
 
     let data = [];
     // INSERT YOUR CODE HERE
+    data = await collection.aggregate([{
+      $addFields: {
+        allPlaces: {$concatArrays: ['$visitedPlaces','$wishListedPlaces'] }
+      }
+    },{
+      $addFields: {
+        totalPlaces: { $size: '$allPlaces' },
+        placeNames: { $map: {
+          input: '$allPlaces',
+            as: 'place',
+            in: '$$place.name'
+          } }
+      }
+    }]).toArray()
+
+    console.log(data)
 
     // Assertions below
     await runAssertions(data);
