@@ -22,6 +22,12 @@ const collectionName = 'battles';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateOne({
+      name: 'The Battle Of Stalingrad'
+    },{
+      $mul: { 'stats.defensivePower': 1.1 },
+      $inc: { 'stats.offensiveKilled': 1503, 'stats.defensiveWounded': -357 },
+    })
 
     // Assertions below
     await runAssertions(collection);
