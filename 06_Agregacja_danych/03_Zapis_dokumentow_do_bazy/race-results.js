@@ -30,8 +30,34 @@ const collectionNameMerge = 'mergeRaceResults';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE - for $out
+    await collection.aggregate([{
+      $addFields: {
+        totalTime: { $sum: '$lapTimes'}
+      }
+    },{
+      $sort: {
+        sum: 1,
+      }
+    },{
+      $out: collectionNameOut
+    }]).toArray()
 
     // INSERT YOUR CODE HERE - for $merge
+    await collection.aggregate([{
+      $addFields: {
+        totalTime: { $sum: '$lapTimes'}
+      }
+    },{
+      $sort: {
+        sum: 1,
+      }
+    },{
+      $merge: {
+        into: collectionNameMerge,
+        on: '_id',
+        whenMatched: 'replace'
+      }
+    }]).toArray()
 
     // Assertions below
     const outCollection = db.collection(collectionNameOut);
