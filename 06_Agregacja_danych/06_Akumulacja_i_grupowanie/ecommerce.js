@@ -23,6 +23,23 @@ const collectionName = 'eCommerce';
 
     let data = [];
     // INSERT YOUR CODE HERE
+    data = await collection.aggregate([
+        {
+        $group: {
+          _id: '$service',
+          totalAmount: { $sum: '$amount' }
+        }
+      },{
+      //styl wyswietlania tj. bez id, service:ABC, totalAmount:suma 123(powatrzaja sie w data)
+        $project: {
+        _id: 0,
+        service: '$_id',
+        totalAmount: '$totalAmount'
+      }
+    }
+    ]).toArray()
+    console.log(data)
+
 
     // Assertions below
     await runAssertions(data);
