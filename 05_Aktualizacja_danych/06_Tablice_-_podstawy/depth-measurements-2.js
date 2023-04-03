@@ -24,6 +24,49 @@ const collectionName = 'depthMeasurements2';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateMany({
+    },{
+      $pull: {
+        // 'samples.depth': { $or: [{$lte: 10},{$gte: 100}]}
+        //nie rozumiem co w tym zapisie jest nie tak
+        samples: {$or:[{ depth: {$lte:10}}, {depth: {$gte: 100}}]}
+      }
+    })
+    await collection.updateOne({
+      _id: '123456'
+    },{
+      $push: {
+        samples: {
+          $each: [{
+            _id: new ObjectID(),
+            depth:34
+          },{
+            _id: new ObjectID(),
+            depth:65
+          }]
+        }
+      }
+    })
+    await collection.updateOne({
+      _id: '789101112'
+    },{
+      $push: {
+        samples: {
+          $each: [{
+            _id: new ObjectID(),
+            depth:97,
+          },{
+            _id: new ObjectID(),
+            depth:12
+          },{
+            _id: new ObjectID(),
+            depth:45
+          }],
+          $position:0,
+          $slice: 5
+        }
+      }
+    })
 
 
     // Assertions below

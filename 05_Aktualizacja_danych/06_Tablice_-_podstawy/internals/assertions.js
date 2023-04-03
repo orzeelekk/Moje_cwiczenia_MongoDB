@@ -1,7 +1,11 @@
 export const runAssertions = async collection => {
+
   const problematicDocs = await collection.find({
     $or: [ { 'samples.depth': { $gte: 100 } }, { 'samples.depth': { $lte: 10 } } ]
   }).toArray();
+  const abc = await collection.find({
+  }).toArray();
+  console.log(abc)
 
   console.assert(problematicDocs && problematicDocs.length === 0,
     'Should not have any docs with problematic samples', problematicDocs);
