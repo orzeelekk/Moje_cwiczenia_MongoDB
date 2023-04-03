@@ -5,6 +5,7 @@ export const runAssertions = async collection => {
     size: 'One Size',
     color: 'White'
   }).toArray())[0] || {};
+  console.log(shirt)
 
   console.assert(shirt.quantity === 50, 'Should have 50 shirts', shirt);
   console.assert(shirt.price === '209 zł', 'Should not modify the shirt price', shirt);
@@ -15,6 +16,7 @@ export const runAssertions = async collection => {
     size: 'XL',
     color: 'Violet'
   }).toArray())[0] || {};
+  console.log(blouse)
 
   console.assert(blouse.quantity === 20, 'Should have 20 blouses', blouse);
   console.assert(blouse.price === '199 zł', 'Should have proper blouse price', blouse);

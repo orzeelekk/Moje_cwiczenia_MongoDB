@@ -22,6 +22,28 @@ const collectionName = 'clothes';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateOne({
+      product: 'Shirt',
+      shop: 'House',
+      color: 'White',
+      size: 'One Size'
+    },{
+      $set: {quantity: 50,},
+      $setOnInsert: {price: '219 zł'}
+    },{
+     upsert:true
+    })
+    await collection.updateOne({
+      product: 'Blouse',
+      shop: 'Mohito',
+      color: 'Violet',
+      size: 'XL'
+    },{
+      $set: {quantity: 20,},
+      $setOnInsert: {price: '199 zł'}
+    },{
+     upsert:true
+    })
 
     // Assertions below
     await runAssertions(collection);
