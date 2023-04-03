@@ -22,6 +22,16 @@ const collectionName = 'drugs';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateMany({
+    },{
+      $rename: {
+        dolor: 'company',
+        consequat: 'name',
+        ullamco: 'icdCode',
+        veniam: 'icdDesc',
+        lorem: 'icdProc'
+      }
+    })
 
     // Assertions below
     await runAssertions(collection);

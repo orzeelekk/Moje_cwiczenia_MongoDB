@@ -1,5 +1,6 @@
 export const runAssertions = async collection => {
   const entries = await collection.find({}).toArray();
+  console.log(entries)
   const randomEntryIndex = Math.round(Math.random() * entries.length - 1);
 
   const randomEntry = entries[randomEntryIndex];
