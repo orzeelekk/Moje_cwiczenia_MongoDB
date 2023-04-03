@@ -22,6 +22,18 @@ const collectionName = 'clothes';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateMany({
+    },{
+      //element to czesc do filtrowania
+      $inc: {'results.$[element].score': 70}
+    },{
+      arrayFilters: [{'element.score': { $lte:0 }}]
+    })
+
+    await collection.updateMany({
+    },{
+      $inc: {'results.$[].score': -5}
+    })
 
     // Assertions below
     await runAssertions(collection);
