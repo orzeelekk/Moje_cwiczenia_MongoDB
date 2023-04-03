@@ -22,6 +22,10 @@ const collectionName = 'rodo';
     const collection = db.collection(collectionName);
 
     // INSERT YOUR CODE HERE
+    await collection.updateMany({
+    },{
+      $unset: {firstName:'',lastName:''}
+    })
 
 
     // Assertions below
