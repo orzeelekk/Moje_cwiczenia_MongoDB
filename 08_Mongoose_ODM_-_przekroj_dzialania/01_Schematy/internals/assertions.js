@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { userA, userB } from './data';
+import { userA, userB } from './data.js';
 
 export const runAssertionsMongo = async (schema) => {
   if (!schema) {
