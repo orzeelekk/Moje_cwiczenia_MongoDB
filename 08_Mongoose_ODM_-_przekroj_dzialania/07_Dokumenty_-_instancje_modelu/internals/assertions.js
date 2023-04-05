@@ -1,4 +1,4 @@
-import { connectToMongoose } from './connect';
+import { connectToMongoose } from './connect.js';
 
 export const runAssertions = async (tomato = {}) => {
   console.assert(tomato.Portions, 'Should have "Portions" defined', tomato.Portions);
